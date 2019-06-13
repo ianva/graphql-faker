@@ -137,14 +137,18 @@ export function fakeSchema(schema: GraphQLSchema) {
   }
 
   function getResolver(type:GraphQLOutputType, field) {
-    if (type instanceof GraphQLNonNull)
-      return getResolver(type.ofType, field);
-    if (type instanceof GraphQLList)
-      // return arrayResolver(getResolver(type.ofType, field));
-      return arrayResolver(getResolver(type.ofType, field), getFakeDirectives(field));
 
-    if (isAbstractType(type))
+    if (type instanceof GraphQLNonNull){
+      return getResolver(type.ofType, field);
+    }
+
+    if (type instanceof GraphQLList) {
+      return arrayResolver(getResolver(type.ofType, field), getFakeDirectives(field));
+    }
+
+    if (isAbstractType(type)){
       return abstractTypeResolver(type);
+    }
 
     return fieldResolver(type, field);
   }
@@ -195,11 +199,11 @@ function arrayResolver(itemResolver, { sample }: DirectiveArgs) {
   }
 
   return (...args) => {
-    let length = getRandomInt(2, 4);
+    let length = getRandomInt(options.min, options.max);
     const result = [];
-
     while (length-- !== 0)
       result.push(itemResolver(...args));
+
     return result;
   }
 }
@@ -214,8 +218,9 @@ function getFakeDirectives(object: any) {
     result.fake = directives.getDirectiveArgs('fake') as FakeArgs;
   if (directives.isApplied('examples'))
     result.examples = directives.getDirectiveArgs('examples') as ExamplesArgs;
-  if (directives.isApplied('sample'))
+  if (directives.isApplied('sample')){
     result.sample = directives.getDirectiveArgs('sample') as SampleArgs;
+  }
   return result;
 }
 
