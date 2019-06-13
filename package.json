@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "bin": "dist/index.js",
   "scripts": {
+    "install": "npm run build:all",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon -e ts --exec 'ts-node src/index.ts'",
     "debug": "ts-node --inspect --compilerOptions '{\"inlineSources\":true}' src/index.ts",
@@ -18,7 +19,7 @@
     "type": "git",
     "url": "git+https://github.com/APIs-guru/graphql-faker.git"
   },
-  "author": "APIs.guru <founders@apis.guru>",
+  "author": "ianva <ianva7@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/APIs-guru/graphql-faker/issues"
