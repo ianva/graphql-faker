@@ -21,6 +21,7 @@ We use `@fake` directive to let you specify how to fake data. And if 60+ fakers 
     type Person {
       name: String @fake(type: firstName)
       gender: String @examples(values: ["male", "female"])
+      pets: [Pet] @sample(min: 1, max: 10)
     }
 
 No need to remember or read any docs. Autocompletion is included!
