@@ -3,6 +3,7 @@ import * as yargs from 'yargs';
 type Options = {
   fileName: string | undefined;
   port: number;
+  seed: number;
   corsOrigin: string | true;
   openEditor: boolean;
   extendURL: string | undefined;
@@ -42,6 +43,12 @@ function builder(cmd) {
         describe: 'URL to existing GraphQL server to extend',
         type: 'string',
         requiresArg: true,
+      },
+      'seed': {
+        alias: 's',
+        describe: 'Generating fake Seeds data',
+        type: 'number',
+        default:  Math.floor((Math.random()*(9000000))+1)
       },
       'header': {
         alias: 'H',
@@ -83,6 +90,7 @@ export function parseCLI(commandCB: (options: Options) => void) {
   function handler(argv) {
     commandCB({
       fileName: argv.SDLFile,
+      seed: argv.seed,
       port: argv.port,
       corsOrigin: argv['cors-origin'],
       openEditor: argv.open,

@@ -25,11 +25,15 @@ import { parseCLI } from './cli';
 import { fakeSchema } from './fake_schema';
 import { proxyMiddleware } from './proxy';
 import { existsSync } from './utils';
+import {count} from './count';
 
 const log = console.log;
 
 parseCLI((options) => {
-  const { extendURL, headers } = options;
+  const { extendURL, headers, seed } = options;
+
+  count.num = seed;
+
   const fileName = options.fileName ||
     (extendURL ? './schema_extension.faker.graphql' : './schema.faker.graphql');
 

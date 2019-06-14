@@ -21,6 +21,8 @@ import {
   fakeValue,
 } from './fake';
 
+import {count} from './count';
+
 interface GraphQLAppliedDirectives {
   isApplied(directiveName: string): boolean;
   getAppliedDirectives(): Array<string>;
@@ -167,11 +169,11 @@ function fieldResolver(type:GraphQLOutputType, field) {
   };
   const {fake, examples} = directiveToArgs;
 
-
   if (isLeafType(type)) {
     if (examples)
       return () => getRandomItem(examples.values)
     if (fake) {
+      count.clear();
       return () => fakeValue(fake.type, fake.options, fake.locale);
     }
     return () => fakeLeafValue(type);

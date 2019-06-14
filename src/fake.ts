@@ -1,6 +1,9 @@
 //import * as faker from 'faker';
 const faker = require('faker');
 import * as moment from 'moment';
+import {count} from './count';
+
+
 
 export function getRandomInt(min:number, max:number) {
   return faker.random.number({min, max});
@@ -191,14 +194,17 @@ Object.keys(fakeFunctions).forEach(key => {
 export function fakeValue(type, options?, locale?) {
   const fakeGenerator = fakeFunctions[type];
   const argNames = fakeGenerator.args;
+
+  faker.seed(count.run());
+
   //TODO: add check
   const callArgs = argNames.map(name => options[name]);
-
   const localeBackup = faker.locale;
   //faker.setLocale(locale || localeBackup);
   faker.locale = locale || localeBackup;
   const result = fakeGenerator.func(...callArgs);
   //faker.setLocale(localeBackup);
   faker.locale = localeBackup;
+
   return result;
 }
