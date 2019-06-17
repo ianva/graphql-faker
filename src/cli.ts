@@ -46,7 +46,7 @@ function builder(cmd) {
       },
       'seed': {
         alias: 's',
-        describe: 'Generating fake Seeds data',
+        describe: 'Generating fake seeds data',
         type: 'number',
         default:  Math.floor((Math.random()*(9000000))+1)
       },

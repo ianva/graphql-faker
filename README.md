@@ -2,11 +2,10 @@
 
 # GraphQL Faker
 
-[![npm](https://img.shields.io/npm/v/graphql-faker.svg)](https://www.npmjs.com/package/graphql-faker)
-[![David](https://img.shields.io/david/APIs-guru/graphql-faker.svg)](https://david-dm.org/APIs-guru/graphql-faker)
-[![David](https://img.shields.io/david/dev/APIs-guru/graphql-faker.svg)](https://david-dm.org/APIs-guru/graphql-faker?type=dev)
-[![npm](https://img.shields.io/npm/l/graphql-faker.svg)](https://github.com/APIs-guru/graphql-faker/blob/master/LICENSE)
-[![docker](https://img.shields.io/docker/build/apisguru/graphql-faker.svg)](https://hub.docker.com/r/apisguru/graphql-faker/)
+[![npm](https://img.shields.io/npm/v/graphql-faker.svg)](https://www.npmjs.com/package/graphql-seed-faker)
+[![David](https://img.shields.io/david/APIs-guru/graphql-faker.svg)](https://github.com/ianva/graphql-seed-faker)
+[![David](https://img.shields.io/david/dev/APIs-guru/graphql-faker.svg)](https://github.com/ianva/graphql-seed-faker?type=dev)
+[![npm](https://img.shields.io/npm/l/graphql-faker.svg)](https://github.com/ianva/graphql-seed-faker/blob/master/LICENSE)
 
 Mock your future API or extend the existing API with realistic data from [faker.js](https://github.com/Marak/faker.js). __No coding required__.
 All you need is to write [GraphQL SDL](https://alligator.io/graphql/graphql-sdl/). Don't worry, we will provide you with examples in our SDL editor.
@@ -37,10 +36,10 @@ No need to remember or read any docs. Autocompletion is included!
 
 ## Install
 
-    npm install -g graphql-faker
+    npm install -g graphql-seed-faker
 or
 
-    yarn global add graphql-faker
+    yarn global add graphql-seed-faker
 
 or run it in a Docker container, see **Usage with Docker**
 
@@ -48,22 +47,22 @@ or run it in a Docker container, see **Usage with Docker**
 
 Mock GraphQL API based on example SDL and open interactive editor:
 
-    graphql-faker --open
+    graphql-seed-faker --open
 
 __Note:__ You can specify non-existing SDL file names - Faker will use example SDL which you can edit in interactive editor.
 
 Extend real data from SWAPI with faked data based on extension SDL:
 
-    graphql-faker ./ext-swapi.graphql --extend http://swapi.apis.guru
+    graphql-seed-faker ./ext-swapi.graphql --extend http://swapi.apis.guru
 
 Extend real data from GitHub API with faked data based on extension SDL (you can get token [here](https://developer.github.com/early-access/graphql/guides/accessing-graphql/#generating-an-oauth-token)):
 
-    graphql-faker ./ext-gh.graphql --extend https://api.github.com/graphql \
+    graphql-seed-faker ./ext-gh.graphql --extend https://api.github.com/graphql \
     --header "Authorization: bearer <TOKEN>"
 
 ## Usage
 
-    graphql-faker [options] [SDL file]
+    graphql-seed-faker [options] [SDL file]
 
 `[SDL file]` - path to file with [SDL](https://alligator.io/graphql/graphql-sdl/). If this argument is omitted Faker uses default file name.
 
@@ -71,6 +70,7 @@ Extend real data from GitHub API with faked data based on extension SDL (you can
 
  * `-p`, `--port`          HTTP Port [default: `env.PORT` or `9002`]
  * `-e`, `--extend`        URL to existing GraphQL server to extend
+ * `-s`, `--seed`          Generating fake seeds data
  * `-o`, `--open`          Open page with SDL editor and GraphiQL in browser
  * `-H`, `--header`        Specify headers to the proxied server in cURL format, e.g.: `Authorization: bearer XXXXXXXXX`
  * `--forward-headers`     Specify which headers should be forwarded to the proxied server
@@ -79,22 +79,12 @@ Extend real data from GitHub API with faked data based on extension SDL (you can
  
 When specifying the `[SDL file]` after the `--forward-headers` option you need to prefix it with `--` to clarify it's not another header. For example:
 ```
-graphql-faker --extend http://example.com/graphql --forward-headers Authorization -- ./temp.faker.graphql
+graphql-seed-faker --extend http://example.com/graphql --forward-headers Authorization -- ./temp.faker.graphql
 ```
 When you finish with an other option there is no need for the `--`:
 ```
-graphql-faker --forward-headers Authorization --extend http://example.com/graphql ./temp.faker.graphql
+graphql-seed-faker --forward-headers Authorization --extend http://example.com/graphql ./temp.faker.graphql
 ```
-
-### Usage with Docker
-
-    docker run -p=9002:9002 apisguru/graphql-faker [options] [SDL file]
-
-To specify a custom file, mount a volume where the file is located to `/workdir`:
-
-    docker run -v=${PWD}:/workdir apisguru/graphql-faker path/to/schema.sdl
-
-Because the process is running inside of the container, `--open` does not work.
 
 # Development
 
